@@ -1,7 +1,7 @@
 Roteiro para criação de uma instância t1.micro na AWS
 
-1. Ao criar a instância, gere a chave na própria página do EC2 e faça
-   o download do arquivo pem.
+1. Ao criar a instância de um servidor Ubuntu, gere a chave na própria 
+   página do EC2 e faça o download do arquivo pem.
 2. Mova o arquivo pem (que deve ter sido baixado no diretório 'Downloads'
    para seu diretório raiz (não é um passo necessário, mas serve para
    sempre matermos os arquivos pem em um local padrão).
@@ -10,8 +10,8 @@ Roteiro para criação de uma instância t1.micro na AWS
 4. Copie o nome do DNS público do servidor EC2 que você criou. Deve ser
    algo como: ec2-54-207-29-160.sa-east-1.compute.amazonaws.com
 5. A partir do diretório onde o arquivo pem está faça login na instância
-   criada usando ssh:
-   ssh -i <arquivo pem> <nome dns público>
+   criada usando ssh (atenção para o usuário ubuntu):
+   ssh -i <arquivo pem> ubuntu@<nome dns público>
 
 
 
