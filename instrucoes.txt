@@ -1,7 +1,11 @@
 Roteiro para criação de uma instância t1.micro na AWS
 
+Criando a instância de servidor Ubuntu/Linux:
+
 1. Ao criar a instância de um servidor Ubuntu, gere a chave na própria 
-   página do EC2 e faça o download do arquivo pem.
+   página do EC2 e faça o download do arquivo pem. (Se você já fez isso
+   antes recentemente é provável que uma chave já exista e você pode
+   reaproveitá-la. Nesse caso, pule para o passo 5).
 2. Mova o arquivo pem (que deve ter sido baixado no diretório 'Downloads'
    para seu diretório raiz (não é um passo necessário, mas serve para
    sempre matermos os arquivos pem em um local padrão).
@@ -13,12 +17,41 @@ Roteiro para criação de uma instância t1.micro na AWS
 5. A partir do diretório onde o arquivo pem está faça login na instância
    criada usando ssh (atenção para o usuário ubuntu):
    ssh -i <arquivo pem> ubuntu@<nome dns público>
+
+Instalando as ferramentas:
+
 6. Uma vez logado no servidor Ubuntu na AWS, instale o git pelo comando:
    sudo apt-get install -y git-core
 7. "Teste" a instalação do git: which git
-8. Baixe o código do software da rede social pelo comando:
+8. Para a instalação do node.js primeiro instale os seguintes pacotes:
+    sudo apt-get update
+    sudo apt-get install g++ curl libssl-dev apache2-utils make
+9. Baixe o código fonte do node.js com o comando:
+    wget http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz
+10. Instale o node.js com os seguintes comandos:
+    tar -xf node-v0.10.24.tar.gz
+    cd node-v0.10.24
+    ./configure
+    make
+    sudo make install
+11. "Teste" a instalação do node:
+    which node
+    node -v
+12. Instale o npm:
+    curl http://npmjs.org/install.sh | sh
+13. "Teste" o npm:
+    which npm
+    npm -v
+
+Instalando o software da rede social
+
+14. Baixe o código do software da rede social pelo comando:
    git clone https://github.com/abreups/rede-social.git
-9. Verifique que o código foi baixado no diretório rede-social:
+15. Verifique que o código foi baixado no diretório rede-social:
    cd rede-social
+16. Instale todas as dependências:
+    npm install
+17. Se nenhum erro ocorreu, rode o app da rede-social:
+    node app.js
 
 
