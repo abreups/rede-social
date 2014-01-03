@@ -8,10 +8,17 @@ Roteiro para criação de uma instância t1.micro na AWS
 3. Mude os direitos do arquivo pem para somente leitura para o user
    chmod 400 <nome do arquivo pem>
 4. Copie o nome do DNS público do servidor EC2 que você criou. Deve ser
-   algo como: ec2-54-207-29-160.sa-east-1.compute.amazonaws.com
+   algo como: ec2-nn-nnn-nn-nnn.sa-east-1.compute.amazonaws.com
+   (onde nn representa números)
 5. A partir do diretório onde o arquivo pem está faça login na instância
    criada usando ssh (atenção para o usuário ubuntu):
    ssh -i <arquivo pem> ubuntu@<nome dns público>
-
+6. Uma vez logado no servidor Ubuntu na AWS, instale o git pelo comando:
+   sudo apt-get install -y git-core
+7. "Teste" a instalação do git: which git
+8. Baixe o código do software da rede social pelo comando:
+   git clone https://github.com/abreups/rede-social.git
+9. Verifique que o código foi baixado no diretório rede-social:
+   cd rede-social
 
 
