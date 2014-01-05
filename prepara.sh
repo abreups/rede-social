@@ -6,10 +6,10 @@ tar -xf node-v0.10.24.tar.gz
 cd node-v0.10.24
 ./configure
 make
-make install
+sudo make install
 which node
 node -v
-curl http://npmjs.org/install.sh | sh
+sudo curl http://npmjs.org/install.sh | sh
 which npm
 npm -v
 
