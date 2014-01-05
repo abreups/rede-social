@@ -83,4 +83,10 @@ read RESPOSTA
 test "$RESPOSTA" != "s" && exit
 which npm
 npm -v
+pwd
+cd
+pwd
+cd rede-social
+npm install
+node app
 
