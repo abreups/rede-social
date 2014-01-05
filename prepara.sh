@@ -30,6 +30,7 @@ echo "------------------------"
 read RESPOSTA
 test "$RESPOSTA" != "s" && exit
 cd node-v0.10.24
+pwd
 echo "------------------------"
 echo "Roda ./configure antes de fazer make (s/n)"
 echo "------------------------"
