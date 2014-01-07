@@ -7,3 +7,6 @@ node_modules/
 # ignore todos os arquivos no diretorio public/js/libs
 public/js/libs
 
+# ignore todos os arquivos .~ do vim
+*.*~
+
