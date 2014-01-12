@@ -1,5 +1,73 @@
 Roteiro para criação de uma instância t1.micro na AWS
 
+Esta seção descreve os passos para se instalar a interface da AWS
+para linha de comando para instâncias EC2.
+
+O procedimento foi baseado nas instruções desse link:
+http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html
+
+1.  Você precisar ter o Python 2.6.3 ou superior instalado. Teste com:
+    $ python --version
+
+2.  Siga os passos descritos na página web acima, seção
+    "To get your access key ID and secret access key" para gerar e 
+    baixar um par de chaves de acesso (access keys).
+    Você vai baixar um arquivo chamado 'rootkey.csv' com duas linhas,
+    cada uma contendo uma chave.
+
+3.  Mova o arquivo 'rootkey.csv' para o diretório '~/.ssh'
+    (Sugerimos criar esse diretório, caso você não o tenha).
+
+4.  Baixe o arquivo zip com o pacote CLI da AWS:
+    $ wget https://s3.amazonaws.com/aws-cli/awscli-bundle.zip
+
+5.  Descompacte o arquivo com:
+    $ unzip awscli-bundle.zip
+
+6.  Instale o pacote apenas para seu usuário local (não use sudo).
+    $ ./awscli-bundle/install -b ~/bin/aws
+
+7.  Certifique-se de que o diretório '~/bin' está no $PATH do seu
+    ambiente:
+    $ echo $PATH
+    Atenção: no Ubuntu 13.10 o arquivo ~/.profile costuma incluir
+    no PATH o diretório ~/bin. No entanto, se você não possuía 
+    esse diretório no momento do passo 6 acima,
+    então você vai ter que fazer logout do Ubuntu
+    e login novamente para a variável de ambiente ser configurada
+    corretamente.
+    Documentação em: https://help.ubuntu.com/community/EnvironmentVariables#Persistent_environment_variables
+
+8.  Teste a instalação do AWS CLI:
+    $ aws help
+    (e você deve ver uma página de help do tipo 'man pages')
+
+Configurando o AWS CLI (Command Line Interface)
+
+1.  Execute o comando:
+    $ aws configure
+
+2.  Copie e cole as informações de 'Access Key ID' e 'Secret Access Key'
+    a partir do seu arquivo 'rootkey.csv' que você salvou no diretório
+    '~/.ssh'
+
+3.  Responda para a 'Default region name': sa-east-1 (que é a "região"
+    da AWS cujos servidores ficam na cidade de São Paulo (você poderia
+    escolher qualquer região da AWS. Veja a lista de regiões em:
+    http://docs.aws.amazon.com/general/latest/gr/rande.html
+
+4.  
+
+
+
+
+
+
+
+
+Abaixo segue o procedimento através do site web da AWS para se criar
+uma instância EC2.
+
 Criando a instância de servidor Ubuntu/Linux:
 
 1. Ao criar a instância de um servidor Ubuntu, gere a chave na própria 

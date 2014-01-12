@@ -6,7 +6,7 @@ var MemoryStore = require("connect").session.MemoryStore;
 // Importa a camada de dados
 var mongoose = require("mongoose");
 var config = {
-	mail: require('./config/mail');
+	mail: require('./config/mail')
 };
 
 // Importa as contas
