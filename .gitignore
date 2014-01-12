@@ -5,7 +5,7 @@ node_modules/
 .git/
 
 # ignore todos os arquivos no diretorio public/js/libs
-public/js/libs
+#public/js/libs
 
 # ignore todos os arquivos .~ e .swp do vim
 *.*~
