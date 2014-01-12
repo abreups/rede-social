@@ -56,9 +56,15 @@ Configurando o AWS CLI (Command Line Interface)
     escolher qualquer região da AWS. Veja a lista de regiões em:
     http://docs.aws.amazon.com/general/latest/gr/rande.html
 
-4.  
+4.  Responda para 'Default output format': JSON
 
+5.  Verifique que o arquivo 'config' criado em ~/.aws possui permissão
+    de leitura e escrita somente para seu usuário com o comando:
+    $ ls -l ~/.aws/config
 
+Usando o AWS CLI
+
+1.  
 
 
 

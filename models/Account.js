@@ -53,10 +53,14 @@ module.exports = function(config, mongoose, nodemailer) {
 				// Endereço de email não é um usuário válido
 				callback(false);
 			} else {
-				var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
+				// var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
+				// SMTP alterado para SES para usar produto AWS SES para e-mails
+				// Arquivo /config/mail.js alterado apropriadamente
+				// Veja http://www.nodemailer.com/docs/ses
+				var smtpTransport = nodemailer.createTransport('SES', config.mail);
 				resetPasswordUrl += '?account=' + doc._id;
 				smtpTransport.sendMail({
-					from: 'thisapp@example.com',
+					from: 'donotreply@mestrecuca.net', // precisa testar com AWS SES
 					to: doc.email,
 					subject: 'SocialNet Password Request',
 					text: 'Click here to reset your password: ' + resetPasswordUrl
