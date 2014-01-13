@@ -24,11 +24,13 @@ app.configure(function() {
 
 // Trata acesso à página raiz do site
 app.get('/', function(req, res){
+	console.log("Express GET acionado para /");
 	res.render("index.jade", {layout:true});
 });
 
 // Trata acesso à página de login
 app.post('/login', function(req, res) {
+	console.log("Express POST acionado para /login");
 	console.log('login request');
 	var email = req.param('email', null);
 	var password = req.param('password', null);
@@ -51,6 +53,7 @@ app.post('/login', function(req, res) {
 
 // Trata acesso à página de registro
 app.post('/register', function(req, res) {
+	console.log("Express POST acionado para /register");
 	var firstName = req.param('firstName', '');
 	var lastName = req.param('lastName', '');
 	var email = req.param('email', null);
@@ -68,6 +71,7 @@ app.post('/register', function(req, res) {
 
 // Responde se usuário já se autenticou
 app.get('/account/authenticated', function(req, res) {
+	console.log("Express GET acionado para /account/authenticated");
 	if ( req.session.loggedIn ) {
 		res.send(200); // 200 == OK
 	} else {
