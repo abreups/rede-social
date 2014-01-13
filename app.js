@@ -82,6 +82,7 @@ app.get('/account/authenticated', function(req, res) {
 
 // Trata acesso à página de senha esquecida
 app.post('/forgotpassword', function(req, res) {
+	console.log("Express POST acionado para /forgotpassword");
 	var hostname = req.headers.host;
 	// Prepara a URL a ser usada no reset da senha
 	var resetPasswordUrl = 'http://' + hostname + '/resetPassword';

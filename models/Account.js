@@ -48,6 +48,7 @@ module.exports = function(config, mongoose, nodemailer) {
 	// A função forgotPassword envia um e-mail para o proprietário da conta
 	// instruindo-o a redefinir a senha
 	var forgotPassword = function(email, resetPasswordUrl, callback) {
+		console.log("Chamou a função forgotPassword em Account.js");
 		var user = Account.findOne( {email: email}, function findAccount(err, doc) {
 			if (err) {
 				// Endereço de email não é um usuário válido
@@ -79,7 +80,6 @@ module.exports = function(config, mongoose, nodemailer) {
 	// As funções login e register usam conceitos de 'digest'.
 	// Um bom artigo para entender esse conceito é esse:
 	// http://www.unixwiz.net/techtips/iguide-crypto-hashes.html
-	//
 	//
 	// "A função de login consulta o MongoDB e retorna um sinalizador (flag)
 	// de verdadeiro ou falso indicando se foi ou não capaz de encontrar um usuário cujo
