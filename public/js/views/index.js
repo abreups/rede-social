@@ -7,6 +7,6 @@ define(['text!templates/index.html'], function(indexTemplate) {
 		}
 	});
 
-	return new indexView;
+	return indexView;
 });
 

@@ -24,11 +24,11 @@ define(['router'], function(router) {
 			// var x = location.hash;
 			// The result of x will be: #part2
 			// Tip: When you set the anchor portion, do not include the hash sign.
-			console.log("Usuário não autenticado");
 			window.location.hash = 'login'; // se não está autenticado ajusta URL para: #login
+			console.log("Usuário não autenticado. window.location.hash = " + window.location.hash);
 		} else {
-			console.log("Usuário está autenticado");
 			window.location.hash = 'index'; // se está autenticado ajusta URL para: #index
+			console.log("Usuário está autenticado. window.location.hash = " + window.location.hash);
 		}
 		Backbone.history.start();
 	};

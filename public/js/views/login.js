@@ -1,6 +1,7 @@
 define(['text!templates/login.html'], function(loginTemplate) {
 	var loginView = Backbone.View.extend({
 		el: $('#content'),
+
 		events: {
 			"submit form": "login"
 		},
@@ -12,7 +13,7 @@ define(['text!templates/login.html'], function(loginTemplate) {
 			}, function(data) {
 				console.log(data);
 			}).error(function(){
-				$("#error").text('Unable to login');
+				$("#error").text('Unable to login em login.js');
 				$("#error").slideDown();
 			});
 			return false;

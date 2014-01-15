@@ -58,9 +58,11 @@ module.exports = function(config, mongoose, nodemailer) {
 				// Arquivo /config/mail.js alterado apropriadamente
 				// Veja http://www.nodemailer.com/docs/ses
 				var smtpTransport = nodemailer.createTransport('SES', config.mail);
+				console.log("resetPasswordUrl = " + resetPasswordUrl);
 				resetPasswordUrl += '?account=' + doc._id;
+				console.log("resetPasswordUrl = " + resetPasswordUrl);
 				smtpTransport.sendMail({
-					from: 'donotreply@mestrecuca.net', // precisa testar com AWS SES
+					// from: 'donotreply@mestrecuca.net', // precisa testar com AWS SES
 					to: doc.email,
 					subject: 'SocialNet Password Request',
 					text: 'Click here to reset your password: ' + resetPasswordUrl
