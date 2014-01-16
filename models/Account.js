@@ -30,6 +30,7 @@ module.exports = function(config, mongoose, nodemailer) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
 		shaSum.update(newpassword); // updates the hash content with the given data (i.e. newpassword)
 		var hashedPassword = shaSum.digest('hex'); // essa operação é: newpassword -> hash() -> digest, e o digest é armazenado
+		console.log("Account.js; changePassword; accountId = " + accountId);
 		Account.update(
 			{_id:accountId}, 
 			// O comando $set do MongoDB altera um único valor no registro da conta
@@ -40,6 +41,8 @@ module.exports = function(config, mongoose, nodemailer) {
 			// ela não vai criar uma conta nova.
 			{upsert:false},
 			function changePasswordCallback(err) {
+				// TO-DO: colocar um teste de sucesso ou não.
+				console.log("err = " + err);
 				console.log('Change password done for account ' + accountId);
 			}
 		);
@@ -61,13 +64,15 @@ module.exports = function(config, mongoose, nodemailer) {
 				console.log("resetPasswordUrl = " + resetPasswordUrl);
 				resetPasswordUrl += '?account=' + doc._id;
 				console.log("resetPasswordUrl = " + resetPasswordUrl);
+				console.log("doc.email = " + doc.email);
 				smtpTransport.sendMail({
-					// from: 'donotreply@mestrecuca.net', // precisa testar com AWS SES
+					from: 'abreups@gmail.com', // precisa testar com AWS SES
 					to: doc.email,
 					subject: 'SocialNet Password Request',
 					text: 'Click here to reset your password: ' + resetPasswordUrl
 				}, function forgotPasswordResult(err) {
 					if (err) {
+						console.log("Erro: " + err);
 						callback(false);
 					} else {
 						callback(true);
@@ -111,6 +116,8 @@ module.exports = function(config, mongoose, nodemailer) {
 			password: shaSum.digest('hex') // essa operação é: senha -> hash() -> digest, e o digest é armazenado
 		});
 		user.save(registerCallback);
+		// TO-DO?: testar se houce erro?
+		console.log("registerCallback: " + registerCallback);
 		console.log('Save command was sent');
 	};
 

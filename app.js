@@ -113,18 +113,26 @@ app.post('/forgotpassword', function(req, res) {
 // Trata reset de senha
 // 1. GET
 app.get('/resetPassword', function(req, res) {
-	var accountId = req.param('account', null);
-	res.render('resetPassword.jade', {locals:{accountId:accountId}});
+	var accountId = req.param('account', null); // 'account' vem da URL
+	console.log("app.js; /resetPassword com GET; accountId = " + accountId);
+	// res.render('resetPassword.jade', {locals:{accountId: accountId}}); // resetPassword.jade chama /resetPassword com POST e nova senha
+	// Não se usa mais a palavra reservada 'locals' na passagem dos parâmetros a partid do Express 3.0.0
+	// Veja: http://stackoverflow.com/questions/10199400/expressjade-local-variable-not-available-in-view/10205586#10205586
+	res.render('resetPassword.jade', {accountId: accountId}); // resetPassword.jade chama /resetPassword com POST e nova senha
 });
 // 2. POST
 app.post('/resetPassword', function(req, res) {
 	var accountId = req.param('accountId', null);
+	console.log("app.js; /resetPassword com POST; accountId = " + accountId);
 	var password = req.param('password', null);
+	console.log("app.js; /resetPassword com POST; password = " + password);
 	if ( null != accountId && null != password ) {
 		Account.changePassword(accountId, password);
 	}
 	res.render('resetPasswordSuccess.jade');
-	console.log('reset password successful in resetPassword with POST');
+	console.log('reset password successful in app.js /resetPassword with POST');
+	// Me parece que nesse ponto session.loggedIn deveria ser setado para false...
+	// Senão, mesmo com a senha mudada, a página de index pode ser acessada com #index
 });
 
 
