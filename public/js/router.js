@@ -1,5 +1,5 @@
 define(['views/index', 'views/register', 'views/login', 'views/forgotpassword'], 
-		function(IndexView, RegisterView, LoginView, ForgotPasswordView) {
+	function(IndexView, RegisterView, LoginView, ForgotPasswordView) {
 
 	var SocialRouter = Backbone.Router.extend({
 		currentView: null,
@@ -23,18 +23,22 @@ define(['views/index', 'views/register', 'views/login', 'views/forgotpassword'],
 		},
 
 		index: function() { // função executada qdo a página acessada é http://localhost:8080/#index
+			console.log("IndexView = " + IndexView);
 			this.changeView(new IndexView());
 		},
 
 		login: function() { // função executada qdo a página acessada é http://localhost:8080/#login
+			console.log("LoginView = " + LoginView);
 			this.changeView(new LoginView());
 		},
 
 		forgotpassword: function() { // função executada qdo a página acessada é http://localhost:8080/#forgotpassword
+			console.log("ForgotPasswordView = " + ForgotPasswordView );
 			this.changeView(new ForgotPasswordView());
 		},
 
 		register: function() { // função executada qdo a página acessada é http://localhost:8080/#register
+			console.log("RegisterView = " + RegisterView);
 			this.changeView(new RegisterView());
 		}
 	});

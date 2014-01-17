@@ -72,12 +72,15 @@ make
 if [ "$PASSOAPASSO" = "s" ]; then
 	echo "------------------------"
 	echo "-> sudo make install"
+	echo "-> sudo make clean"
 	echo "Roda make install como root para instalar o node.js (s/n)"
 	echo "------------------------"
 	read RESPOSTA
 	test "$RESPOSTA" != "s" && exit
 fi
 sudo make install
+sudo make clean
+
 if [ "$PASSOAPASSO" = "s" ]; then
 	echo "------------------------"
 	echo "->which node"
@@ -115,4 +118,14 @@ pwd
 cd rede-social
 npm install
 #node app
+
+# Instala NERDTree
+cd ~
+mkdir .vim
+cd .vim
+git clone https://github.com/scrooloose/nerdtree.git
+mv nerdtree/* .
+rm -rf nerdtree
+# NERDTree deveria estar funcionando. Rode o vim para se certificar
+
 
