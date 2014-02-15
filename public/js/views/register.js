@@ -14,6 +14,9 @@ define(['text!templates/register.html'], function(registerTemplate) {
 				password: $('input[name=password]').val()
 			}, function(data) {
 				console.log(data);
+				// Depois de registrar, vá pra index
+				// https://github.com/plorent/book-node-mongodb-backbone/commit/d8d2330b40dc36c24729648c978b03f71b6243bc
+				window.location.hash = 'index';
 			});
 			return false;
 		},
