@@ -25,6 +25,12 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
 			$(statusHtml).prependTo('.status_list').hide().fadeIn('slow');
 		},
 
+		// A função updateStatus coleta as informações fornecidas
+		// pelo usuário, posta essas informações no backend do Express,
+		// gera um novo objeto 'status' e adiciona esse objeto ao objeto
+		// de coleção da visão.
+		// O objeto de coleção é uma instância de 'StatusCollection'
+		// que estende o objeto 'Backbone.Collection'.
 		updateStatus: function() {
 			var statusText = $('input[name=status]').val();
 			var statusCollection = this.collection;
