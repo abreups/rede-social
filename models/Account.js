@@ -1,6 +1,11 @@
 module.exports = function(config, mongoose, nodemailer) {
 	var crypto = require('crypto');
 
+
+
+
+
+
 	var AccountSchema = new mongoose.Schema({
 		email: { type: String, unique: true },
 		password: { type: String },
@@ -102,6 +107,14 @@ module.exports = function(config, mongoose, nodemailer) {
 		});
 	};
 
+
+
+
+
+
+
+
+
 	var register = function(email, password, firstName, lastName) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
 		shaSum.update(password); // updates the hash content with the given data (i.e. password)
@@ -116,12 +129,13 @@ module.exports = function(config, mongoose, nodemailer) {
 			password: shaSum.digest('hex') // essa operação é: senha -> hash() -> digest, e o digest é armazenado
 		});
 		user.save(registerCallback);
-		// TO-DO?: testar se houce erro?
+		// TO-DO?: testar se houve erro?
 		console.log("registerCallback: " + registerCallback);
 		console.log('Save command was sent');
 	};
 
 	return {
+
 		register: register,
 		forgotPassword: forgotPassword,
 		changePassword: changePassword,

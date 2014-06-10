@@ -88,6 +88,18 @@ app.get('/account/authenticated', function(req, res) {
 });
 
 
+app.get('/accounts/:id', function(req, res) {
+	var accountId = req.params.id == 'me'	// if this is true
+		? req.session.accountId		// then assign this value
+		: req.params.id;		// else assign this value
+	Account.findOne({_id:accountId}, function(account) {
+		res.send(account);
+		// ATENÇÃO: brecha de segurança, pois retorna todo
+		// o record da conta, incluindo a senha criptografada!
+	});
+});
+
+
 // Trata acesso à página de senha esquecida
 app.post('/forgotpassword', function(req, res) {
 	console.log("Express POST acionado para /forgotpassword");
