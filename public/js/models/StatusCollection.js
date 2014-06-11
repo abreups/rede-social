@@ -3,7 +3,7 @@ define(['models/Status'], function(Status) {
 		model: Status
 	});
 
-	return StatusCollection
+	return StatusCollection;
 
 });
 

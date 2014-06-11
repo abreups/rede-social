@@ -88,6 +88,57 @@ app.get('/account/authenticated', function(req, res) {
 });
 
 
+// Note que é igual a: 
+// app.get('/accounts/:id/status', function(req, res) {
+app.get('/accounts/:id/activity', function(req, res) {
+	var accountId = req.params.id == 'me'
+		? req.session.accountId
+		: req.params.id;
+	models.Account.findById(accountId, function(account) {
+		res.send(account.activity);
+	});
+});
+
+
+// Obtém uma lista de status
+app.get('/accounts/:id/status', function(req, res) {
+	var accountId = req.params.id == 'me'
+		? req.session.accountId
+		: req.params.id;
+	// ATENÇÃO: se a conta não existir, o node reportará um erro.
+	// Precisa colocar alguns testes antes de fazer o find().
+	models.Account.findById(accountId, function(account) {
+		res.send(account.status);
+	});
+});
+
+// ATENÇÃO: não há nenhuma autenticação para os manipuladores de status,
+// o que significa que qualquer pessoa que possa adivinhar o ID de uma
+// conta poderá postar nela ao seu bel prazer. (Será solucionado em 
+// capítulos futuros com o Express).
+app.post('/accounts/:id/status', function(req, res) {
+	var accountId = req.params.id == 'me'
+		? req.session.accountId
+		: req.params.id;
+	models.Account.findById(accountId, function(account) {
+		status = {
+			name: account.name,
+			status: req.param('status', '')
+		};
+		account.status.push(status);
+
+		// Envia o status para todos os amigos
+		account.activity.push(status);
+		account.save(function(err) {
+			if (err) {
+				console.log('Error saving account: ' + err);
+			}
+		});
+	});
+	res.send(200); // 200 == OK
+});
+
+
 app.get('/accounts/:id', function(req, res) {
 	var accountId = req.params.id == 'me'	// if this is true
 		? req.session.accountId		// then assign this value
