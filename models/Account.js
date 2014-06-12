@@ -1,13 +1,16 @@
-module.exports = function(config, mongoose, nodemailer) {
+module.exports = function(config, mongoose, Status, nodemailer) {
 	var crypto = require('crypto');
 
-
-
-
-
+	var Status = new mongoose.Schema({
+		name: {
+			first: { type: String },
+			last: { type: String }
+		},
+		status: {type: String}
+	});
 
 	var AccountSchema = new mongoose.Schema({
-		email: { type: String, unique: true },
+		email: { type: String, unique: true }, // o campo de e-mail tem que ser único (unique)
 		password: { type: String },
 		name: {
 			first: { type: String },
@@ -19,7 +22,9 @@ module.exports = function(config, mongoose, nodemailer) {
 			year: { type: Number }
 		},
 		photoUrl: { type: String },
-		biography: { type: String }
+		biography: { type: String },
+		status: [Status], // Apenas minhas próprias atualizações de status
+		activity: [Status] // Todas as atualizações de status, incluindo amigos
 	});
 
 	var Account = mongoose.model('Account', AccountSchema);
@@ -56,7 +61,7 @@ module.exports = function(config, mongoose, nodemailer) {
 	// A função forgotPassword envia um e-mail para o proprietário da conta
 	// instruindo-o a redefinir a senha
 	var forgotPassword = function(email, resetPasswordUrl, callback) {
-		console.log("Chamou a função forgotPassword em Account.js");
+		console.log("Chamou a função forgotPassword em models/Account.js");
 		var user = Account.findOne( {email: email}, function findAccount(err, doc) {
 			if (err) {
 				// Endereço de email não é um usuário válido
@@ -74,7 +79,7 @@ module.exports = function(config, mongoose, nodemailer) {
 				smtpTransport.sendMail({
 					from: 'abreups@gmail.com', // precisa testar com AWS SES
 					to: doc.email,
-					subject: 'SocialNet Password Request',
+					subject: 'Mestre Cuca Password Request',
 					text: 'Click here to reset your password: ' + resetPasswordUrl
 				}, function forgotPasswordResult(err) {
 					if (err) {
@@ -103,17 +108,16 @@ module.exports = function(config, mongoose, nodemailer) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
 		shaSum.update(password); // updates the hash content with the given data (i.e. password)
 		Account.findOne({email:email, password:shaSum.digest('hex')}, function(err, doc) {
-			callback(null!=doc);
+			// callback(null!=doc); // pág 76 do livro
+			callback(doc); // pág 116 do livro e github em Junho 2014
 		});
 	};
 
-
-
-
-
-
-
-
+	var findById = function(accountId, callback) {
+		Account.findOne({_id:accountId}, function(err, doc) {
+			callback(doc);
+		});
+	};
 
 	var register = function(email, password, firstName, lastName) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
@@ -135,7 +139,7 @@ module.exports = function(config, mongoose, nodemailer) {
 	};
 
 	return {
-
+		findById: findById,
 		register: register,
 		forgotPassword: forgotPassword,
 		changePassword: changePassword,
