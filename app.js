@@ -25,8 +25,8 @@ app.configure(function() {
 	app.use(express.cookieParser());
 	// MemoryStore is the built-in session store of Express. Has performance restrictions...
 	app.use(express.session({ 
-		secret: "SocialNet secret Key", 
-		store: new MemoryStore()
+		secret: "SocialNet secret Key", // necessário aqui pois não foi passado em 'cookieParser()'
+		store: new MemoryStore() // "instance of a session store"
    	}));
 	mongoose.connect(dbPath, function onMongooseError(err) {
 		if (err) throw err;
@@ -47,7 +47,9 @@ app.get('/', function(req, res){
 app.post('/login', function(req, res) {
 	console.log("Login request em app.js. Express POST acionado para /login");
 	var email = req.param('email', null);
+	console.log('email = ' + email);
 	var password = req.param('password', null);
+	console.log('password = ' + password);
 	if ( null == email || email.length < 1 || null == password || password.length < 1) {
 		res.send(400); // 400 == bad request / solicitação incorreta
 		return;
@@ -61,10 +63,11 @@ app.post('/login', function(req, res) {
 			return;
 		}
 		console.log('login was successful in POST /login');
-		// seta a variável loggedIn na session store do Express para true == usuário está logado.
+		// seta a variável loggedIn na session store do Express para true (ou seja, agora usuário está logado).
 		req.session.loggedIn = true;
 		req.session.accountId = account._id;
 		console.log("req.session.loggedIn = " + req.session.loggedIn);
+		console.log("req.session.accountId = " + req.session.accountId);
 		res.send(200); // 200 == OK
 	});
 });
@@ -90,6 +93,12 @@ app.post('/register', function(req, res) {
 // Responde se usuário já se autenticou
 app.get('/account/authenticated', function(req, res) {
 	console.log("Express GET acionado para /account/authenticated");
+
+	// 'req.session' é um objeto provido pelo middleware 'express.session()'
+	// Se esta é a primeira chamada a '/account/authenticated', então loggedIn nunca foi
+	// definido e será 'undefined' até que seja definido. Assim, antes fo primeiro login
+	// 'req.session.loggedIn' será 'undefined', portanto 'falso' e acionará res.send(401).
+	// 'req.session.loggedIn' será setada para 'true' em '/login'.
 	console.log("req.session.loggedIn = " + req.session.loggedIn);
 	if ( req.session.loggedIn ) {
 		res.send(200); // 200 == OK

@@ -1,10 +1,19 @@
+// router.js (roda no browser)
+//
+// Rotas:
+//   /#index
+//   /#login
+//   /#register
+//   /#forgotpassword
+//   /#profile/:id
+
 define(
 	[
 	'views/index', 'views/register', 'views/login', 'views/forgotpassword',
 	'views/profile', 'models/Account', 'models/StatusCollection'
 	], 
 	function( IndexView, RegisterView, LoginView, ForgotPasswordView,
-			ProfileView, Account, StatusCollection) {
+			ProfileView, Account, StatusCollection ) {
 
 	var SocialRouter = Backbone.Router.extend({
 		currentView: null,

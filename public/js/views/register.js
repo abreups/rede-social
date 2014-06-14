@@ -1,6 +1,6 @@
 define(['text!templates/register.html'], function(registerTemplate) {
 	var registerView = Backbone.View.extend({
-		el: $('#content'),
+		el: $('#content'), // essa div está em index.jade
 
 		events: {
 			"submit form": "register"
@@ -18,6 +18,11 @@ define(['text!templates/register.html'], function(registerTemplate) {
 				// https://github.com/plorent/book-node-mongodb-backbone/commit/d8d2330b40dc36c24729648c978b03f71b6243bc
 				window.location.hash = 'index';
 			});
+
+			// "Retorna false para desabilitar a funcionalidade de formulário padrão,
+			// a qual dispararia um recarregamento da página. Você não precisa recarregar
+			// a página porque negociou a comunicação do servidor nos bastidores
+			// utilizando o comando post.
 			return false;
 		},
 

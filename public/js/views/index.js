@@ -28,15 +28,13 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
 			statusHtml = x.render().el;
 			// var statusHtml = (new StatusView({ model : status})).render().el;
 			// console.log("statusHtml em index.js onStatusAdded = " + statusHtml);
-			// $(statusHtml).prependTo('.status_list').hide().fadeIn('slow');
+			$(statusHtml).prependTo('.status_list').hide().fadeIn('slow');
 		},
 
-		// A função updateStatus coleta as informações fornecidas
-		// pelo usuário, posta essas informações no backend do Express,
-		// gera um novo objeto 'status' e adiciona esse objeto ao objeto
-		// de coleção da visão.
+		// updateStatus é uma função disparada pelo evento 'submit form' (acima).
+		// A função updateStatus coleta as informações fornecidas pelo usuário, posta essas informações no backend do Express,
+		// gera um novo objeto 'status' e adiciona esse objeto ao objeto de coleção da visão.
 		// O objeto de coleção é uma instância de 'StatusCollection'
-		// que estende o objeto 'Backbone.Collection'.
 		updateStatus: function() {
 			var statusText = $('input[name=status]').val();
 			var statusCollection = this.collection;
@@ -49,6 +47,8 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
 		},
 
 		render: function() {
+			console.log("entrou em render de index.js");
+			console.log("indexTemplate = " + indexTemplate);
 			this.$el.html(indexTemplate);
 		}
 	});
