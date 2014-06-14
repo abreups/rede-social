@@ -21,8 +21,14 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
 		},
 
 		onStatusAdded: function(status) {
-			var statusHtml = (new StatusView({ model : status})).render().el;
-			$(statusHtml).prependTo('.status_list').hide().fadeIn('slow');
+			console.log("Entrou em onStatusAdded de index.js");
+			console.log("status = " + status);
+			var x = new StatusView({model:status});
+			console.log("x = " + x);
+			statusHtml = x.render().el;
+			// var statusHtml = (new StatusView({ model : status})).render().el;
+			// console.log("statusHtml em index.js onStatusAdded = " + statusHtml);
+			// $(statusHtml).prependTo('.status_list').hide().fadeIn('slow');
 		},
 
 		// A função updateStatus coleta as informações fornecidas

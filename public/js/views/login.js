@@ -16,7 +16,7 @@ define(['text!templates/login.html'], function(loginTemplate) {
 				window.location.hash = 'index';
 				console.log(data);
 			}).error(function(){
-				$("#error").text('Unable to login em login.js');
+				$("#error").text('Unable to login em login.js. Usuário ou senha incorretos.');
 				$("#error").slideDown();
 			});
 			return false;

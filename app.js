@@ -12,7 +12,7 @@ var config = {
 
 // Importa as contas (os modelos)
 var models = {
-	Account: require('./models/Account')(config, mongoose, nodemailer);
+	Account: require('./models/Account')(config, mongoose, nodemailer)
 };
 
 app.configure(function() {

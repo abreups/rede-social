@@ -13,7 +13,7 @@ define(
 			"index": "index", // roda a função em 'index:' qdo a página acessada é http://localhost:8080/#index
 			"login": "login", // roda a função em 'login:' qdo a página acessada é http://localhost:8080/#login
 			"register": "register", // roda a função em 'register:' qdo a página acessada é http://localhost:8080/#register
-			"forgotpassword": "forgotpassword" // roda a função em 'forgotpassword:' qdo a página acessada é http://localhost:8080/#forgotpassword
+			"forgotpassword": "forgotpassword", // roda a função em 'forgotpassword:' qdo a página acessada é http://localhost:8080/#forgotpassword
 			"profile/:id": "profile" // roda a função 'profile:' quando a página acessada é http://localhost:8080/#profile:<id>
 		},
 		
