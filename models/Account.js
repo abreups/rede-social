@@ -1,3 +1,14 @@
+// Métodos (funções):
+//		findById
+//		register
+//		forgotPassword
+//		changePassword
+//		login
+//		Account
+//
+
+
+
 module.exports = function(config, mongoose, Status, nodemailer) {
 	var crypto = require('crypto');
 

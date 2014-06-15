@@ -1,3 +1,8 @@
+// Model Account
+// 
+// Dependências: models/StatusCollection
+// 
+
 define(['models/StatusCollection'], function(StatusCollection) {
 	var Account = Backbone.Model.extend({
 		urlRoot: '/accounts',
