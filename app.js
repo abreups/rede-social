@@ -1,3 +1,7 @@
+//
+// app.js - programa base que roda no servidor.
+//
+
 var express = require('express');
 var app = express();
 var nodemailer = require("nodemailer");
@@ -10,11 +14,13 @@ var config = {
 	mail: require('./config/mail')
 };
 
-// Importa as contas (os modelos)
+// Importa o modelo de conta de usuário usado na base de dados MongoDB ('Account').
+// (que está em /models/Account.js, não em /public/js/models/...)
 var models = {
 	Account: require('./models/Account')(config, mongoose, nodemailer)
 };
 
+// Configura o Express.js
 app.configure(function() {
 	app.set('view engine', 'jade');
 	app.use(express.static(__dirname + '/public'));
@@ -48,6 +54,7 @@ app.post('/login', function(req, res) {
 	console.log("Login request em app.js. Express POST acionado para /login");
 	var email = req.param('email', null);
 	console.log('email = ' + email);
+	// ATENÇÃO: a senha é recebida sem nenhuma criptografia (plain text!!)
 	var password = req.param('password', null);
 	console.log('password = ' + password);
 	if ( null == email || email.length < 1 || null == password || password.length < 1) {
@@ -55,6 +62,7 @@ app.post('/login', function(req, res) {
 		return;
 	}
 
+	// Tenta fazer o login
 	models.Account.login(email, password, function(account) {
 		if ( !account ) {
 			console.log('login attempt failed in login');

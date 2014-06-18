@@ -1,12 +1,23 @@
-// Métodos (funções):
-//		findById
-//		register
-//		forgotPassword
-//		changePassword
-//		login
-//		Account
+// Account - modelo mongoDB para uma conta de usuário.
 //
-
+// Métodos (funções):
+//	findById: a partir do 'accountID' busca esse usuário na base de dados
+//			MongoDB e retorna todos os dados da conta.
+//
+//	register: Pega o e-mail, senha, nomes (first, last); criptografa a senha, cria um novo registro e
+//			guarda tudo na base de dados MongoDB.
+//
+//	forgotPassword: primeiro valida o endereço de e-mail. Se OK, então
+//			envia um e-mail ao usuário com um link para a troca
+//			da senha.
+//
+//	changePassword: criptografa a senha e armazena na base de dados MongoDB.
+//
+//	login: a partir do e-mail e da senha (criptografada), busca o usuário
+//		na base de dados MongoDB. Retorna com a conta encontrada.
+//
+//	Account: é o model Mongoose da conta de um usuário.
+//
 
 
 module.exports = function(config, mongoose, Status, nodemailer) {
@@ -38,8 +49,11 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		activity: [Status] // Todas as atualizações de status, incluindo amigos
 	});
 
+	// Cria o modelo de base de dados ('Account') para uma conta de usuário.
+	// 'mongoose.model(<model name>, <schema>)'
 	var Account = mongoose.model('Account', AccountSchema);
 
+	// Uma função auxiliar.
 	var registerCallback = function(err) {
 		if (err) {
 			return console.log(err);
@@ -47,6 +61,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		return console.log('Account was created');
 	};
 
+	// Criptografa a senha e armazena na base de dados MongoDB.
 	var changePassword = function(accountId, newpassword) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
 		shaSum.update(newpassword); // updates the hash content with the given data (i.e. newpassword)
@@ -124,12 +139,16 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		});
 	};
 
+
+	// Busca 'accountID' na base de dados.
 	var findById = function(accountId, callback) {
 		Account.findOne({_id:accountId}, function(err, doc) {
 			callback(doc);
 		});
 	};
 
+	// Pega o e-mail, senha, nomes (first, last); criptografa a senha, cria um novo registro e
+	// guarda tudo na base de dados MongoDB.
 	var register = function(email, password, firstName, lastName) {
 		var shaSum = crypto.createHash('sha256'); // cria um hash criptográfico usando o algoritmo 'sha256'
 		shaSum.update(password); // updates the hash content with the given data (i.e. password)

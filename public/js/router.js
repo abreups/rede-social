@@ -27,28 +27,29 @@ define(
 		},
 		
 		changeView: function(view) {
-			if ( null != this.currentView ) {
+			if ( this.currentView != null ) {
 				// "Quando uma visão é modificada, diz-se para a visão 
 				// antiga (currentView) que pare de escutar eventos de
 				// uma página web por meio de undelegateEvents."
 				this.currentView.undelegateEvents();
 			}
 			this.currentView = view;
+			console.log("executando render() em changeView de router.js");
 			this.currentView.render();
 		},
 
 		index: function() { // função executada qdo a página acessada é http://localhost:8080/#index
-			console.log("IndexView = " + IndexView);
+			console.log("Backbone entrou no tratamento da rota /#index");
+			// console.log("IndexView = " + IndexView);
 			var statusCollection = new StatusCollection();
 			statusCollection.url = '/accounts/me/activity';
-			this.changeView(new IndexView({
-				collection: statusCollection
-			}));
+			this.changeView(new IndexView({ collection: statusCollection }));
 			statusCollection.fetch();
 		},
 
 		login: function() { // função executada qdo a página acessada é http://localhost:8080/#login
-			console.log("LoginView = " + LoginView);
+			// console.log("login: LoginView = " + LoginView);
+			console.log("Chamando changeView(LoginView) a partir de login: em router.js");
 			this.changeView(new LoginView());
 		},
 
