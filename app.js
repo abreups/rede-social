@@ -119,6 +119,7 @@ app.get('/account/authenticated', function(req, res) {
 // Note que é igual a: 
 // app.get('/accounts/:id/status', function(req, res) {
 app.get('/accounts/:id/activity', function(req, res) {
+	console.log("Entrou em GET /accounts/:id/activity");
 	var accountId = req.params.id == 'me'
 		? req.session.accountId
 		: req.params.id;
@@ -130,9 +131,12 @@ app.get('/accounts/:id/activity', function(req, res) {
 
 // Obtém uma lista de status
 app.get('/accounts/:id/status', function(req, res) {
+	console.log("Entrou em GET '/accounts/:id/status'");
+	console.log("req.params = " + req.params);
 	var accountId = req.params.id == 'me'
 		? req.session.accountId
 		: req.params.id;
+	console.log("accountId = " + accountId);
 	// ATENÇÃO: se a conta não existir, o node reportará um erro.
 	// Precisa colocar alguns testes antes de fazer o find().
 	models.Account.findById(accountId, function(account) {

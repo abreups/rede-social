@@ -49,6 +49,7 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
 		render: function() {
 			console.log("entrou em render de index.js");
 			// console.log("indexTemplate = " + indexTemplate);
+			console.log("Vai atualizar o $el com indexTemplate");
 			this.$el.html(indexTemplate);
 		}
 	});
