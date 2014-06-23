@@ -10,3 +10,6 @@ node_modules/
 # ignore todos os arquivos .~ e .swp do vim
 *.*~
 *.swp
+
+# ignore subdiretório onde está o node
+node-v*

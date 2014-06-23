@@ -119,11 +119,19 @@ app.get('/account/authenticated', function(req, res) {
 // Note que é igual a: 
 // app.get('/accounts/:id/status', function(req, res) {
 app.get('/accounts/:id/activity', function(req, res) {
+
 	console.log("Entrou em GET /accounts/:id/activity");
-	var accountId = req.params.id == 'me'
-		? req.session.accountId
-		: req.params.id;
+	console.log("req.params.id = " + req.params.id);
+	console.log("req.session.accountId = " + req.session.accountId);
+	console.log("req.params.id = " + req.params.id);
+
+	var accountId = req.params.id == 'me' ? req.session.accountId : req.params.id;
+
+	console.log("accountId = " + accountId );
+
+	console.log("Vai buscar tudo da conta na base de dados - Account.findById");
 	models.Account.findById(accountId, function(account) {
+		console.log("account.activity = " + account.activity);
 		res.send(account.activity);
 	});
 });
@@ -149,12 +157,16 @@ app.get('/accounts/:id/status', function(req, res) {
 // conta poderá postar nela ao seu bel prazer. (Será solucionado em 
 // capítulos futuros com o Express).
 app.post('/accounts/:id/status', function(req, res) {
-	var accountId = req.params.id == 'me'
-		? req.session.accountId
-		: req.params.id;
+
+	console.log("Entrou em POST /accounts/:id/status");
+	console.log("req.params.id = " + req.params.id);
+	console.log("req.session.accountId = " + req.session.accountId);
+	console.log("req.params.id = " + req.params.id);
+
+	var accountId = req.params.id == 'me' ? req.session.accountId : req.params.id;
 	models.Account.findById(accountId, function(account) {
 		status = {
-			name: account.name,
+			name: account.name.first,
 			status: req.param('status', '')
 		};
 		account.status.push(status);

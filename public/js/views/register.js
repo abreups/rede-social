@@ -13,10 +13,13 @@ define(['text!templates/register.html'], function(registerTemplate) {
 				email: $('input[name=email]').val(),
 				password: $('input[name=password]').val()
 			}, function(data) {
-				console.log(data);
+				console.log("Retorno de POST /register = " + data);
 				// Depois de registrar, vá pra index
 				// https://github.com/plorent/book-node-mongodb-backbone/commit/d8d2330b40dc36c24729648c978b03f71b6243bc
-				window.location.hash = 'index';
+				//window.location.hash = 'index';
+				// Não vá para index, vá para login, pois o ambiente com as variáveis de session
+				// têm que ser devidamente arrumados.
+				window.location.hash = 'login';
 			});
 
 			// "Retorna false para desabilitar a funcionalidade de formulário padrão,

@@ -164,7 +164,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		});
 		user.save(registerCallback);
 		// TO-DO?: testar se houve erro?
-		console.log("registerCallback: " + registerCallback);
+		//console.log("registerCallback: " + registerCallback);
 		console.log('Save command was sent');
 	};
 
