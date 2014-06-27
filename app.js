@@ -166,9 +166,13 @@ app.post('/accounts/:id/status', function(req, res) {
 	var accountId = req.params.id == 'me' ? req.session.accountId : req.params.id;
 	models.Account.findById(accountId, function(account) {
 		status = {
-			name: account.name.first,
+			// name: account.name, // this doesn't work as account.name returns blank
+			name: account.name.first, // quick and dirty fix
 			status: req.param('status', '')
 		};
+		console.log("status.name = " + status.name);
+		console.log("status.status = " + status.status);
+		console.log("status = " + status);
 		account.status.push(status);
 
 		// Envia o status para todos os amigos
