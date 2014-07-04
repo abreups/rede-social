@@ -10,20 +10,22 @@
 define(
 	[
 	'views/index', 'views/register', 'views/login', 'views/forgotpassword',
-	'views/profile', 'models/Account', 'models/StatusCollection'
+	'views/profile', 'models/Account', 'models/StatusCollection',
+	'views/addcontact'
 	], 
 	function( IndexView, RegisterView, LoginView, ForgotPasswordView,
-			ProfileView, Account, StatusCollection ) {
+			ProfileView, Account, StatusCollection, AddContactView ) {
 
 	var SocialRouter = Backbone.Router.extend({
 		currentView: null,
 
 		routes: {
-			"index": "index", // roda a função em 'index:' qdo a página acessada é http://localhost:8080/#index
-			"login": "login", // roda a função em 'login:' qdo a página acessada é http://localhost:8080/#login
-			"register": "register", // roda a função em 'register:' qdo a página acessada é http://localhost:8080/#register
-			"forgotpassword": "forgotpassword", // roda a função em 'forgotpassword:' qdo a página acessada é http://localhost:8080/#forgotpassword
-			"profile/:id": "profile" // roda a função 'profile:' quando a página acessada é http://localhost:8080/#profile:<id>
+			"addcontact": "addcontact", // roda a função em 'addcontact:' qdo a página acessada é /#addcontact
+			"index": "index", // roda a função em 'index:' qdo a página acessada é /#index
+			"login": "login", // roda a função em 'login:' qdo a página acessada é /#login
+			"register": "register", // roda a função em 'register:' qdo a página acessada é /#register
+			"forgotpassword": "forgotpassword", // roda a função em 'forgotpassword:' qdo a página acessada é /#forgotpassword
+			"profile/:id": "profile" // roda a função 'profile:' quando a página acessada é /#profile:<id>
 		},
 		
 		// changeView é a função que chama render da View em questão (da view que foi invocada).
@@ -57,6 +59,11 @@ define(
 			// "The server handler for fetch() requests should return a JSON
 			// array of models."
 			statusCollection.fetch();
+		},
+
+		addcontact: function() {
+			console.log("Chamando changeView(AddContactView) a partir de addcontact: em router.js");
+			this.changeView(new AddContactView());
 		},
 
 		login: function() { // função executada qdo a página acessada é http://localhost:8080/#login
