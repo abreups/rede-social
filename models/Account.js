@@ -140,6 +140,20 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 	};
 
 
+	// Busca uma conta na base de dados a partir de uma string
+	// Busca nos campos de nome e email
+	// A string pode ser uma expressão regular (regular expression)
+	var findByString = function(searchStr, callback) {
+		var searchRegex = new RegExp(searchStr, 'i');
+		Account.find({
+			$or: [
+				{ 'name.full': { $regex: searchRegex } },
+				{ email: { $regex: searchRegex }  }
+			]
+		}, callback);
+	};
+
+
 	// Busca 'accountID' na base de dados.
 	var findById = function(accountId, callback) {
 		Account.findOne({_id:accountId}, function(err, doc) {
@@ -173,6 +187,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		register: register,
 		forgotPassword: forgotPassword,
 		changePassword: changePassword,
+		findByString: findByString,
 		login: login,
 		Account: Account
 	}

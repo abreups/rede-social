@@ -1,6 +1,6 @@
 // addcontact.js
 // View da inclusão de amigo
-define(['SocialNetView', 'models/Contact', 'views/Contact', 'text!templates/addcontact.html'],
+define(['SocialNetView', 'models/Contact', 'views/contact', 'text!templates/addcontact.html'],
 	function(SocialNetView, Contact, ContactView, addcontactTemplate) {
 		var addcontactView = SocialNetView.extend({
 			el: $('#content'),
@@ -22,9 +22,18 @@ define(['SocialNetView', 'models/Contact', 'views/Contact', 'text!templates/addc
 			},
 
 			render: function(resultList) {
-
+				var view = this;
+				this.$el.html(_.template(addcontactTemplate));
+				if ( resultList != null ) {
+					_.each(resultList, function(contactJson) {
+						var contactModel = new Contact(contactJson);
+						var contactHtml = (new ContactView(
+							{ addButton: true, model: contactModel }
+						)).render().el;
+					$('#results').append(contactHtml);
+					});
+				}
 			}
-
 		});
-	
+		return addcontactView;
 });
