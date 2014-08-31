@@ -8,6 +8,10 @@ function(SocialNetView, profileTemplate,
 	var profileView = SocialNetView.extend({
 		el: $('#content'),
 
+		events: {
+			"submit form": "postStatus"
+		},
+
 		initialize: function () {
 			this.model.bind('change', this.render, this);
 		},

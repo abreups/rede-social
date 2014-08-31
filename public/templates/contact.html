@@ -1,2 +1,16 @@
-<!-- <%= var %> é substituído pelo valor de var pelo Backbone/Underscore -->
-<h1><%= name.first %> <%= name.last %></h1>
+<!-- < % = var % > é substituído pelo valor de var pelo Backbone/Underscore -->
+<h1><%= model.name.first %> <%= model.name.last %></h1>
+
+<% if ( !addButton ) { %>
+	<p><a href="#profile/<%=model.accountId%>">View</p>
+<% } %>
+
+<div class="actionarea">
+	<% if ( addButton ) { %>
+		<p><button class="addbutton">Adicionar contato</p>
+	<% } %>
+
+	<% if ( removeButton ) { %>
+		<p><button class="removebutton">Remover contato</p>
+	<% } %>
+</div>

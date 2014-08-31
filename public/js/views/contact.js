@@ -11,11 +11,30 @@ function(SocialNetView, contactTemplate) {
 		},
 
 		addContact: function() {
-
+			var $responseArea = this.$('.actionarea'); // não tem que ser '.actionarea' ? BUG ??
+			$.post('/accounts/me/contact',
+				{contactId: this.model.get('_id')},
+				function onSuccess() {
+					$responseArea.text('Contato adicionado');
+				}, function onError() {
+					$responseArea.text('Não foi possível adicionar o contato');
+				}
+			);
 		},
 
 		removeContact: function() {
-
+			var $responseArea = this.$('.actionarea');
+			$responseArea.text('Removendo contato...');
+			$.ajax({
+				url: '/accounts/me/contact',
+				type: 'DELETE',
+				data: {
+					contactId: this.model.get('accountId')
+					}}).done(function onSuccess() {
+						$responseArea.text('Contato removido');
+					}).fail(function onError() {
+						$responseArea.text('Não foi possível remover o contato');
+					});
 		},
 
 		initialize: function() {

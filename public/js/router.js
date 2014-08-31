@@ -10,11 +10,12 @@
 define(
 	[
 	'views/index', 'views/register', 'views/login', 'views/forgotpassword',
-	'views/profile', 'models/Account', 'models/StatusCollection',
-	'views/addcontact'
+	'views/profile', 'views/contacts', 'models/Account', 'models/StatusCollection',
+	'views/addcontact', 'models/ContactCollection'
 	], 
 	function( IndexView, RegisterView, LoginView, ForgotPasswordView,
-			ProfileView, Account, StatusCollection, AddContactView ) {
+			ContactsView, ProfileView, Account, StatusCollection, AddContactView,
+			ContactCollection ) {
 
 	var SocialRouter = Backbone.Router.extend({
 		currentView: null,
@@ -25,7 +26,8 @@ define(
 			"login": "login", // roda a função em 'login:' qdo a página acessada é /#login
 			"register": "register", // roda a função em 'register:' qdo a página acessada é /#register
 			"forgotpassword": "forgotpassword", // roda a função em 'forgotpassword:' qdo a página acessada é /#forgotpassword
-			"profile/:id": "profile" // roda a função 'profile:' quando a página acessada é /#profile:<id>
+			"profile/:id": "profile", // roda a função 'profile:' quando a página acessada é /#profile:<id>
+			"contacts/:id": "contacts"
 		},
 		
 		// changeView é a função que chama render da View em questão (da view que foi invocada).
@@ -89,8 +91,17 @@ define(
 			console.log("Chamando changeView(ProfileView) a partir de profile: em router.js");
 			this.changeView(new ProfileView({model: model})); // a view em questão é a "ProfileView"
 			model.fetch();
-		}
+		},
 
+		contacts: function(id) {
+			var contactId = id ? id : 'me';
+			var contactsCollection = new ContactCollection();
+			contactsCollection.url = '/accounts/' + contactId + '/contacts';
+			this.changeView(new ContactsView({
+				collection: contactsCollection
+			}));
+			contactsCollection.fetch();
+		}
 	});
 
 	return new SocialRouter();
