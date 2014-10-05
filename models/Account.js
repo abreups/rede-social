@@ -31,6 +31,10 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 		status: {type: String}
 	});
 
+
+
+
+
 	var AccountSchema = new mongoose.Schema({
 		email: { type: String, unique: true }, // o campo de e-mail tem que ser único (unique)
 		password: { type: String },
@@ -143,6 +147,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 	// Busca uma conta na base de dados a partir de uma string
 	// Busca nos campos de nome e email
 	// A string pode ser uma expressão regular (regular expression)
+	// e maiúsculas e minúsculas são ignoradas.
 	var findByString = function(searchStr, callback) {
 		var searchRegex = new RegExp(searchStr, 'i');
 		Account.find({
@@ -160,6 +165,37 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 			callback(doc);
 		});
 	};
+
+	// Adiciona contato
+	var addContact = function(account, addcontact) {
+		contact = {
+			name: {
+				first: addcontact.name.first,
+				last: addcontact.name.last
+			},
+			accountId: addcontact._id,
+			added: new Date(),
+			updated: new Date()
+		};
+		account.contacts.push(contact);
+
+		account.save(function (err) {
+			if (err) {
+				console.log('Erro salvando account: ' + err);
+			}
+		});
+	};
+
+
+	// Remove contato
+	var removeContact
+
+
+
+	// 
+	var hasContact
+
+
 
 	// Pega o e-mail, senha, nomes (first, last); criptografa a senha, cria um novo registro e
 	// guarda tudo na base de dados MongoDB.

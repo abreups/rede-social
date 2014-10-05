@@ -169,6 +169,7 @@ app.get('/accounts/:id/status', function(req, res) {
 // capítulos futuros com o Express).
 app.post('/accounts/:id/status', function(req, res) {
 
+	// DEBUG
 	console.log("Entrou em POST /accounts/:id/status");
 	console.log("req.params.id = " + req.params.id);
 	console.log("req.session.accountId = " + req.session.accountId);
@@ -196,6 +197,63 @@ app.post('/accounts/:id/status', function(req, res) {
 	});
 	res.send(200); // 200 == OK
 });
+
+
+// Delete contact
+app.delete('/accounts/:id/contact', function(req, res) {
+	var accountId = req.params.id == 'me' ? req.session.accountId : req.params.id;
+	var contactId = req.param('contactId', null);
+
+	// contactId faltante, retorne erro
+	if (contactId == null) {
+		res.send(400);
+		return;
+	}
+
+	models.Account.findById(accountId, function(account) {
+		if (!account) return;
+		models.Account.findById(contactId, function(contact, err) {
+			if (!contact) return;
+			models.Account.removeContact(account, contactId);
+			// Encerra o link inverso
+			models.Account.removeContact(contact, accountId);
+		});
+	});
+	// Nota: não em callback - este ponto de extremidade retorna imediatamente e
+	// é processado em segundo plano.
+	res.send(200);
+});
+
+
+
+// POST para adicionar um contato
+//
+app.post('/accounts/:id/contact', function(req, res) {
+	var accountId = req.params.id == 'me' ? req.session.accountId : req.params.id;
+	var contactId = req.param('contactId', null);
+
+	// contactId faltante, retorne erro
+	if (contactId == null) {
+		res.send(400);
+		return;
+	}
+
+	models.Account.findById(accountId, function(account) {
+		if (account) {
+			models.Account.findById(contactId, function(contact) {
+				models.Account.addContact(account, contact);
+
+				// Faz o link inverso
+				models.Account.addContact(contact, account);
+				account.save();
+			});
+		}
+	});
+	// Nota: não em callback - este ponto de extremidade retorna imediatamente e
+	// é processado em segundo plano.
+	res.send(200);
+});
+
 
 
 app.get('/accounts/:id', function(req, res) {
@@ -236,6 +294,7 @@ app.post('/forgotpassword', function(req, res) {
 // Busca contato por nome ou email e retorna dados da conta
 app.post('/contacts/find', function(req, res) {
 	var searchStr = req.param('searchStr', null);
+	// DEBUG
 	console.log("Entrou em POST /contacts/find com searchStr = " + searchStr);
 	if (searchStr == null) {
 		res.send(400);

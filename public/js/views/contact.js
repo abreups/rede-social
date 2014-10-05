@@ -22,6 +22,7 @@ function(SocialNetView, contactTemplate) {
 			);
 		},
 
+		// Remove contato
 		removeContact: function() {
 			var $responseArea = this.$('.actionarea');
 			$responseArea.text('Removendo contato...');
