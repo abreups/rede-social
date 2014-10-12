@@ -188,7 +188,22 @@ module.exports = function(config, mongoose, Status, nodemailer) {
 
 
 	// Remove contato
-	var removeContact
+	var removeContact = function(account, contactId) {
+		// Se a conta não tiver contatos, retorne imediatamente.
+		if (account.contacts == null) return;
+
+		// Faça um loop para cada elemento da lista de contatos.
+		// Compare seu ID com o ID fornecido pelo usuário.
+		// Se os IDs corresponderem, remova o contato da lista de contatos.
+		// Assim que tudo tiver sido feito, salve a conta de volta no MongoDB.
+		account.contacts.forEach(function(contact) {
+			if (contact.accountId == contactId) {
+				account.contacts.remove(contact);
+			}
+		});
+		account.save();
+	};
+
 
 
 

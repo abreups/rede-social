@@ -255,12 +255,16 @@ app.post('/accounts/:id/contact', function(req, res) {
 });
 
 
-
+// Obtém informações da conta.
+// Avisa se "é amigo".
 app.get('/accounts/:id', function(req, res) {
 	var accountId = req.params.id == 'me'	// if this is true
 		? req.session.accountId		// then assign this value
 		: req.params.id;		// else assign this value
 	models.Account.findById(accountId, function(account) {
+		if (accountId == 'me' || models.Account.hasContact(account, req.session.accountId)) {
+			account.isFriend = true;
+		}
 		res.send(account);
 		// ATENÇÃO: brecha de segurança, pois retorna todo
 		// o record da conta, incluindo a senha criptografada!
@@ -285,7 +289,7 @@ app.post('/forgotpassword', function(req, res) {
 		if (success) {
 			res.send(200);
 		} else {
-			console.log('email or password not found in POST /forgotpassword');
+			console.log('email ou senha não encontrados em POST /forgotpassword');
 			res.send(404);
 		}
 	});
@@ -328,14 +332,14 @@ app.get('/resetPassword', function(req, res) {
 // 2. POST
 app.post('/resetPassword', function(req, res) {
 	var accountId = req.param('accountId', null);
-	console.log("app.js; /resetPassword com POST; accountId = " + accountId);
+	// console.log("app.js; /resetPassword com POST; accountId = " + accountId);
 	var password = req.param('password', null);
-	console.log("app.js; /resetPassword com POST; password = " + password);
+	// console.log("app.js; /resetPassword com POST; password = " + password);
 	if ( null != accountId && null != password ) {
 		models.Account.changePassword(accountId, password);
 	}
 	res.render('resetPasswordSuccess.jade');
-	console.log('reset password successful in app.js /resetPassword with POST');
+	// console.log('reset password successful in app.js /resetPassword with POST');
 	// ATENÇÃO: Me parece que nesse ponto session.loggedIn deveria ser setado para false...
 	// Senão, mesmo com a senha mudada, a página de index pode ser acessada com #index
 });
